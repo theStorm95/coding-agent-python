@@ -1,8 +1,8 @@
 import subprocess
 from pathlib import Path
+from typing import Any
 
 from anthropic.types import ToolParam
-
 
 DEFINITIONS: list[ToolParam] = [
     {
@@ -34,7 +34,11 @@ DEFINITIONS: list[ToolParam] = [
         "input_schema": {
             "type": "object",
             "properties": {
-                "path": {"type": "string", "description": "Directory path to list. Defaults to current directory.", "default": "."},
+                "path": {
+                    "type": "string",
+                    "description": "Directory path to list. Defaults to current directory.",
+                    "default": ".",
+                },
             },
             "required": [],
         },
@@ -77,7 +81,7 @@ def execute_bash(command: str) -> str:
     return output or "(no output)"
 
 
-def handle(name: str, inputs: dict) -> str:
+def handle(name: str, inputs: dict[str, Any]) -> str:
     try:
         match name:
             case "read_file":

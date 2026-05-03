@@ -13,5 +13,27 @@ dependencies = [
 [project.scripts]
 app = "coding_agent_python.main:main"
 
+[dependency-groups]
+dev = [
+    "mypy>=1.15.0",
+    "nox>=2026.4.10",
+    "pytest>=8.0.0",
+    "ruff>=0.11.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+strict = true
+files = ["src"]
+
 [tool.uv]
 package = true
