@@ -1,0 +1,17 @@
+[project]
+name = "coding-agent-python"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "anthropic>=0.97.0",
+    "python-dotenv>=1.2.2",
+    "rich>=15.0.0",
+]
+
+[project.scripts]
+app = "coding_agent_python.main:main"
+
+[tool.uv]
+package = true
