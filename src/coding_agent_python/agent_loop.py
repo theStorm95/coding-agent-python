@@ -47,7 +47,6 @@ def run(messages: list[MessageParam]) -> str:
                 console.print(f"  tool: {block.name}", style="bold yellow")
                 console.print(f"  input: {block.input}", style="dim")
                 result = tools.handle(block.name, block.input)
-                console.print(f"  result: {result}", style="dim green")
                 tool_results.append(
                     {
                         "type": "tool_result",
