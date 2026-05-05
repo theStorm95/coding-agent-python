@@ -13,7 +13,10 @@ client = anthropic.Anthropic()
 console = Console()
 
 SYSTEM_PROMPT = (
-    f"You are a coding agent at {os.getcwd()}. Use tools to solve tasks. Act, don't explain."
+    f"You are a coding agent at {os.getcwd()}. "
+    "Before working on any multi-step task, ALWAYS call todo_write first "
+    "to write your complete plan. Execute each step in order. "
+    "Call todo_update after completing each step."
 )
 
 

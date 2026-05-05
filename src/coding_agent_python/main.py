@@ -2,7 +2,7 @@ from anthropic.types import MessageParam
 from rich.console import Console
 from rich.markdown import Markdown
 
-from coding_agent_python import agent_loop
+from coding_agent_python.core import agent_loop
 
 console = Console()
 

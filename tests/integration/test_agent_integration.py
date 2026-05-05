@@ -13,7 +13,7 @@ from unittest.mock import MagicMock, patch
 
 from anthropic.types import MessageParam
 
-from coding_agent_python import agent_loop
+from coding_agent_python.core import agent_loop
 
 
 def _text_block(text: str) -> MagicMock:
@@ -49,7 +49,7 @@ class TestAgentWithFileTools:
             _response([_text_block("The file says: world content")], "end_turn"),
         ]
 
-        with patch("coding_agent_python.agent_loop.client") as mock_client:
+        with patch("coding_agent_python.core.agent_loop.client") as mock_client:
             mock_client.messages.create.side_effect = responses
             messages: list[MessageParam] = [{"role": "user", "content": "read hello.txt"}]
             result = agent_loop.run(messages)
@@ -71,7 +71,7 @@ class TestAgentWithFileTools:
             _response([_text_block("All done")], "end_turn"),
         ]
 
-        with patch("coding_agent_python.agent_loop.client") as mock_client:
+        with patch("coding_agent_python.core.agent_loop.client") as mock_client:
             mock_client.messages.create.side_effect = responses
             messages: list[MessageParam] = [{"role": "user", "content": "write then read"}]
             result = agent_loop.run(messages)
@@ -92,7 +92,7 @@ class TestAgentWithFileTools:
             _response([_text_block("Listed the files")], "end_turn"),
         ]
 
-        with patch("coding_agent_python.agent_loop.client") as mock_client:
+        with patch("coding_agent_python.core.agent_loop.client") as mock_client:
             mock_client.messages.create.side_effect = responses
             messages: list[MessageParam] = [{"role": "user", "content": "list files"}]
             result = agent_loop.run(messages)
@@ -111,7 +111,7 @@ class TestAgentWithFileTools:
             _response([_text_block("Command ran successfully")], "end_turn"),
         ]
 
-        with patch("coding_agent_python.agent_loop.client") as mock_client:
+        with patch("coding_agent_python.core.agent_loop.client") as mock_client:
             mock_client.messages.create.side_effect = responses
             messages: list[MessageParam] = [{"role": "user", "content": "run a command"}]
             result = agent_loop.run(messages)
@@ -129,7 +129,7 @@ class TestAgentWithFileTools:
             _response([_text_block("The answer is 42")], "end_turn"),
         ]
 
-        with patch("coding_agent_python.agent_loop.client") as mock_client:
+        with patch("coding_agent_python.core.agent_loop.client") as mock_client:
             mock_client.messages.create.side_effect = responses
             messages: list[MessageParam] = [{"role": "user", "content": "what is in data.txt?"}]
             agent_loop.run(messages)

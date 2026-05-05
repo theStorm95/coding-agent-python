@@ -8,7 +8,6 @@ from anthropic.types import ToolParam
 DEFINITIONS: list[ToolParam] = []
 _handlers: dict[str, Callable[..., str]] = {}
 
-
 FuncT = Callable[..., str]
 
 

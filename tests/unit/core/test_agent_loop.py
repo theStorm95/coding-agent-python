@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 
 from anthropic.types import MessageParam, ToolResultBlockParam
 
-from coding_agent_python import agent_loop
+from coding_agent_python.core import agent_loop
 
 
 def _text_block(text: str) -> MagicMock:
@@ -33,7 +33,7 @@ class TestRun:
     def test_returns_text_on_end_turn(self) -> None:
         mock_response = _response([_text_block("Hello!")], "end_turn")
 
-        with patch("coding_agent_python.agent_loop.client") as mock_client:
+        with patch("coding_agent_python.core.agent_loop.client") as mock_client:
             mock_client.messages.create.return_value = mock_response
             messages: list[MessageParam] = [{"role": "user", "content": "hi"}]
             result = agent_loop.run(messages)
@@ -43,7 +43,7 @@ class TestRun:
     def test_returns_empty_string_when_no_text_block(self) -> None:
         mock_response = _response([], "end_turn")
 
-        with patch("coding_agent_python.agent_loop.client") as mock_client:
+        with patch("coding_agent_python.core.agent_loop.client") as mock_client:
             mock_client.messages.create.return_value = mock_response
             messages: list[MessageParam] = [{"role": "user", "content": "hi"}]
             result = agent_loop.run(messages)
@@ -54,7 +54,7 @@ class TestRun:
         text_block = _text_block("response")
         mock_response = _response([text_block], "end_turn")
 
-        with patch("coding_agent_python.agent_loop.client") as mock_client:
+        with patch("coding_agent_python.core.agent_loop.client") as mock_client:
             mock_client.messages.create.return_value = mock_response
             messages: list[MessageParam] = [{"role": "user", "content": "hi"}]
             agent_loop.run(messages)
@@ -65,7 +65,7 @@ class TestRun:
         tool_response = _response([_tool_block("execute_bash", {"command": "echo hi"})], "tool_use")
         end_response = _response([_text_block("Done")], "end_turn")
 
-        with patch("coding_agent_python.agent_loop.client") as mock_client:
+        with patch("coding_agent_python.core.agent_loop.client") as mock_client:
             mock_client.messages.create.side_effect = [tool_response, end_response]
             messages: list[MessageParam] = [{"role": "user", "content": "run echo"}]
             result = agent_loop.run(messages)
@@ -79,7 +79,7 @@ class TestRun:
         )
         end_response = _response([_text_block("done")], "end_turn")
 
-        with patch("coding_agent_python.agent_loop.client") as mock_client:
+        with patch("coding_agent_python.core.agent_loop.client") as mock_client:
             mock_client.messages.create.side_effect = [tool_response, end_response]
             messages: list[MessageParam] = [{"role": "user", "content": "run it"}]
             agent_loop.run(messages)
@@ -102,7 +102,7 @@ class TestRun:
         )
         end_response = _response([_text_block("both done")], "end_turn")
 
-        with patch("coding_agent_python.agent_loop.client") as mock_client:
+        with patch("coding_agent_python.core.agent_loop.client") as mock_client:
             mock_client.messages.create.side_effect = [tool_response, end_response]
             messages: list[MessageParam] = [{"role": "user", "content": "run both"}]
             result = agent_loop.run(messages)
